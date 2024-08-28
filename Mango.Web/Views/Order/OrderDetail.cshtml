@@ -8,10 +8,10 @@
             <div class="card-header bg-dark text-light ml-0">
                 <div class="container row">
                     <div class="col-12 d-none d-md-block col-md-6 pb-1 text-warning h3">
-                        Order Summary
+                        Xác nhận
                     </div>
                     <div class="col-12 col-md-4 offset-md-2 text-right mt-2">
-                        <a asp-action="OrderIndex" class="btn btn-warning form-control btn-sm">Back to Orders</a>
+                        <a asp-action="OrderIndex" class="btn btn-warning form-control btn-sm">Quay lại</a>
                     </div>
                 </div>
             </div>
@@ -20,14 +20,14 @@
                     <div class="row">
                         <div class="col-12 col-lg-6 pb-4">
                             <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Tên</div>
                                 <div class="col-9">
                                     <input asp-for="Name" readonly class="form-control" />
                                 </div>
                             </div>
                            
                             <div class="row my-1">
-                                <div class="col-3">Phone</div>
+                                <div class="col-3">SĐT</div>
                                 <div class="col-9">
                                     <input asp-for="Phone" readonly class="form-control" />
                                 </div>
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="row my-1">
-                                <div class="col-3">Order Date</div>
+                                <div class="col-3">Ngày đặt hàng</div>
                                 <div class="col-9">
                                     <input value="@Model.OrderTime.ToShortDateString()" readonly class="form-control" />
                                 </div>
@@ -62,7 +62,7 @@
                                 </div>
                             }
                             <div class="row my-1">
-                                <div class="col-3">Order Status</div>
+                                <div class="col-3">Trạng thái đơn</div>
                                 <div class="col-9">
                                     <input asp-for="Status" readonly class="form-control" />
                                 </div>
@@ -71,9 +71,9 @@
                         </div>
                         <div class="col-12 col-lg-5 offset-lg-1">
                             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-warning">Order Summary</span>
+                                <span class="text-warning">Tóm tắt</span>
                             </h4>
-                            <label class="bg-info text-dark text-center form-control my-2">Order Status - @Model.Status</label>
+                            <label class="bg-info text-dark text-center form-control my-2">Trạng thái - @Model.Status</label>
 
                             <ul class="list-group mb-3">
                                 @foreach(var detail in Model.OrderDetails){
@@ -82,11 +82,11 @@
                                         <div class="col-8">
 
                                             <h6 class="my-0 text-white-50">@detail.ProductName</h6>
-                                                <small class="text-muted">Price : @detail.Price.ToString("c")</small><br />
+                                                <small class="text-muted">Price : @detail.Price.ToString()</small><br />
                                                 <small class="text-muted">Quantity : @detail.Count</small>
                                         </div>
                                         <div class="col-4 text-end">
-                                            <p class="text-success">@((detail.Count * detail.Price).ToString("c"))</p>
+                                            <p class="text-success">@((detail.Count * detail.Price).ToString())</p>
                                         </div>
                                     </div>
                                 </li>
@@ -94,10 +94,10 @@
                                 <li class="list-group-item bg-primary">
                                     <div class="row container">
                                         <div class="col-6">
-                                            <h5 class="text-white">TOTAL </h5>
+                                            <h5 class="text-white">Tổng </h5>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <h5 class="text-white">@Model.OrderTotal.ToString("c")</h5>
+                                            <h5 class="text-white">@Model.OrderTotal.ToString()</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -107,16 +107,16 @@
                             {
                                 @if (Model.Status == SD.Status_Approved)
                                 {
-                                    <button asp-action="OrderReadyForPickup" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Ready for Pickup</button>
+                                    <button asp-action="OrderReadyForPickup" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Đang giao</button>
                                 }
                                 @if (Model.Status == SD.Status_ReadyForPickup)
                                 {
-                                    <button asp-action="CompleteOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Complete Order</button>
+                                    <button asp-action="CompleteOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Hoàn thành</button>
                                 }
 
                                 if (Model.Status == SD.Status_Approved || Model.Status == SD.Status_ReadyForPickup)
                                 {
-                                    <button asp-action="CancelOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
+                                    <button asp-action="CancelOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-danger form-control my-1">Hủy đơn</button>
                                 }
                             }
                         </div>

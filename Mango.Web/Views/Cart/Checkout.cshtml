@@ -10,17 +10,17 @@
     <div class="border mt-2 p-4 rounded">
         <div class="container row">
             <div class="col-md-7 col-12">
-                <span style="font-size:25px;" class="text-warning mb-2">Order Summary</span>
+                <span style="font-size:25px;" class="text-warning mb-2">Tóm tắt</span>
             </div>
             <div class="col-md-5 col-12">
-                <a asp-action="CartIndex" class="btn btn-outline-warning form-control">Back to Cart</a>
+                <a asp-action="CartIndex" class="btn btn-outline-warning form-control">Giỏ hàng</a>
             </div>
             <br /><br /><br />
             <hr />
             <div class="col-7">
                 <div class="row pt-2">
                     <div class="col-12 py-2">
-                        <input asp-for="CartHeader.Name" placeholder="full name..." class="form-control" />
+                        <input asp-for="CartHeader.Name" placeholder="Tên..." class="form-control" />
                         <span asp-validation-for="CartHeader.Name" class="text-danger"></span>
                     </div>
                     <div class="col-12 py-2">
@@ -28,11 +28,11 @@
                         <span asp-validation-for="CartHeader.Email" class="text-danger"></span>
                     </div>
                     <div class="col-12 py-2">
-                        <input class="form-control" asp-for="CartHeader.Phone" placeholder="phone number..." />
+                        <input class="form-control" asp-for="CartHeader.Phone" placeholder="SĐT.." />
                         <span asp-validation-for="CartHeader.Phone" class="text-danger"></span>
                     </div>
                     <div class="col-12 pt-2">
-                        <label class="col-form-label">Order will be ready in 30minutes after placing order. If you place order when restaurant is closed it will be ready next day.</label>
+                        <label class="col-form-label">Đơn hàng sớm được đặt</label>
                     </div>
 
                 </div>
@@ -43,14 +43,14 @@
                         <div class=" d-none d-lg-block">
                             <div class="row text-danger">
                                 <div class="col-6">
-                                    Product Details
+                                    Chi tiết sản phẩm
                                 </div>
 
                                 <div class="col-3">
-                                    Price
+                                    Giá
                                 </div>
                                 <div class="col-3">
-                                    Count
+                                    Số lượng
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="col-3" style="font-size:11px;">
-                                    <span style="font-size:17px;"> @cartObj.Product.Price.ToString("c")</span>
+                                    <span style="font-size:17px;"> @cartObj.Product.Price.ToString()</span>
 
                             </div>
                             <div class="col-3" style="font-size:11px;">
@@ -73,10 +73,10 @@
                         }
                         <div class="row">
                             <div class="col-12 text-center pr-4 text-danger">
-                                Order Total :  @Model.CartHeader.CartTotal.ToString("c") <br />
+                                Tổng :  @Model.CartHeader.CartTotal.ToString() <br />
                                 @if (Model.CartHeader.Discount > 0)
                                 {
-                                    <span class="text-success"> Order Discount :  @Model.CartHeader.Discount.ToString("c")</span>
+                                    <span class="text-success"> Giảm giá :  @Model.CartHeader.Discount.ToString()</span>
                                 }
                             </div>
                         </div>
@@ -87,7 +87,7 @@
 
                             <div class="col-12 ">
                                 <button type="submit" class="btn btn-success form-control ">
-                                    <span>Place Order</span>
+                                    <span>Đặt hàng</span>
                                 </button>
                             </div>
                         </div>
