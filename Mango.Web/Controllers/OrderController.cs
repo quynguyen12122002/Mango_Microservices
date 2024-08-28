@@ -25,21 +25,42 @@ namespace Mango.Web.Controllers
 
         [Authorize]
         public async Task<IActionResult> OrderDetail(int orderId)
-		{
-			OrderHeaderDto orderHeaderDto = new OrderHeaderDto();
+        {
+            OrderHeaderDto orderHeaderDto = new OrderHeaderDto();
+
             string userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
 
             var response = await _orderService.GetOrder(orderId);
-			if (response != null && response.IsSuccess)
-			{
-				orderHeaderDto = JsonConvert.DeserializeObject<OrderHeaderDto>(Convert.ToString(response.Result));
-			}
-			if(!User.IsInRole(SD.RoleAdmin) && userId!= orderHeaderDto.UserId)
+
+            if (response != null && response.IsSuccess)
+            {
+                orderHeaderDto = JsonConvert.DeserializeObject<OrderHeaderDto>(Convert.ToString(response.Result));
+
+                if (!User.IsInRole(SD.RoleAdmin) && userId != orderHeaderDto.UserId)
+                {
+                    return NotFound(); // Trả về 404 nếu người dùng không có quyền truy cập
+                }
+            }
+            else
             {
                 return NotFound();
             }
+
             return View(orderHeaderDto);
-		}
+        }
+
+
+        [HttpPost("ApprovedOrder")]
+        public async Task<IActionResult> ApprovedOrder(int orderId)
+        {
+            var response = await _orderService.UpdateOrderStatus(orderId,SD.Status_Approved);
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "Thay đổi trạng thái thành công";
+                return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
+            }
+            return View();
+        }
 
         [HttpPost("OrderReadyForPickup")]
         public async Task<IActionResult> OrderReadyForPickup(int orderId)
@@ -47,7 +68,7 @@ namespace Mango.Web.Controllers
             var response = await _orderService.UpdateOrderStatus(orderId,SD.Status_ReadyForPickup);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Status updated successfully";
+                TempData["success"] = "Thay đổi trạng thái thành công";
                 return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
             }
             return View();
@@ -59,7 +80,7 @@ namespace Mango.Web.Controllers
             var response = await _orderService.UpdateOrderStatus(orderId, SD.Status_Completed);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Status updated successfully";
+                TempData["success"] = "Thay đổi trạng thái thành công";
                 return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
             }
             return View();
@@ -71,7 +92,7 @@ namespace Mango.Web.Controllers
             var response = await _orderService.UpdateOrderStatus(orderId, SD.Status_Cancelled);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Status updated successfully";
+                TempData["success"] = "Thay đổi trạng thái thành công";
                 return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
             }
             return View();
@@ -93,13 +114,19 @@ namespace Mango.Web.Controllers
                 list = JsonConvert.DeserializeObject<List<OrderHeaderDto>>(Convert.ToString(response.Result));
                 switch (status)
                 {
-                    case "approved":
+                    case "Đang chờ":
+                        list = list.Where(u => u.Status == SD.Status_Pending);
+                        break;
+                    case "Xác nhận":
                         list = list.Where(u => u.Status == SD.Status_Approved);
                         break;
-					case "readyforpickup":
+					case "Đang giao":
 						list = list.Where(u => u.Status == SD.Status_ReadyForPickup);
 						break;
-					case "cancelled":
+					case "Hoàn thành":
+						list = list.Where(u => u.Status == SD.Status_Completed);
+						break;
+					case "Hủy đơn":
 						list = list.Where(u => u.Status == SD.Status_Cancelled || u.Status == SD.Status_Refunded);
 						break;
 					default:

@@ -47,7 +47,7 @@ namespace Mango.Web.Controllers
 
                 if (response != null && response.IsSuccess)
                 {
-                    TempData["success"] = "Coupon created successfully";
+                    TempData["success"] = "Thêm mã giảm giá thành công";
                     return RedirectToAction(nameof(CouponIndex));
                 }
                 else
@@ -81,7 +81,7 @@ namespace Mango.Web.Controllers
 
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Coupon deleted successfully";
+                TempData["success"] = "Xóa mã giảm giá thành công";
                 return RedirectToAction(nameof(CouponIndex));
             }
             else

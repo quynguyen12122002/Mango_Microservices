@@ -3,19 +3,19 @@
 <form asp-action="CouponCreate">
     <br />
     <div class="container border p-3">
-        <h1 class="text-white text-center">Thêm PGG</h1>
+        <h1 class="text-white text-center">Thêm mới mã giảm giá</h1>
 
         <hr />
         <div class="row">
             <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;"> Mã GG</label>
+                <label class="control-label pt-2" style="font-size:20px;"> Mã giảm giá</label>
             </div>
             <div class="col-10 pb-3">
                 <input asp-for="CouponCode" class="form-control" />
                 <span asp-validation-for="CouponCode" class="text-danger"></span>
             </div>
             <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Discount Amount</label>
+                <label class="control-label pt-2" style="font-size:20px;">Chiết khấu</label>
             </div>
             <div class="col-10 pb-3">
                 <input asp-for="DiscountAmount" class="form-control" />
@@ -31,10 +31,10 @@
 
             <div class="col-5 offset-2">
 
-                <a asp-action="CouponIndex" class="btn-primary btn form-control ">Trở về DS</a>
+                <a asp-action="CouponIndex" class="btn-primary btn form-control ">Trở về</a>
             </div>
             <div class="col-5">
-                <input type="submit" value="Create" class="btn btn-success form-control" />
+                <input type="submit" value="Thêm mới" class="btn btn-success form-control" />
 
             </div>
 

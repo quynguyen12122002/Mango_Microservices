@@ -22,11 +22,6 @@
                 <input asp-for="Password" class="form-control" placeholder="Mật khẩu..." />
                 <span asp-validation-for="Password" class="text-danger" />
             </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <select asp-for="Role" class="form-select" asp-items="@ViewBag.RoleList">
-                    <option disabled selected>--Quyền--</option>
-                </select>
-            </div>
 
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <button type="submit" class="form-control btn btn-success" value="Submit">Đăng ký</button>

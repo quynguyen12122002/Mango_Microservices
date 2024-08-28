@@ -67,7 +67,7 @@
                             }
                         </div>
                         <div class="col-6 text-end">
-                            <span class="text-danger" style="font-size:21px;"> Order Total : @string.Format("{0:N0}", Model.CartHeader.CartTotal) <br /></span>
+                            <span class="text-danger" style="font-size:21px;"> Tổng tiền : @string.Format("{0:N0}", Model.CartHeader.CartTotal) <br /></span>
                             @if (Model.CartHeader.Discount > 0)
                             {
                                 <span class="text-success"> Chiết khấu : @string.Format("{0:N0}", Model.CartHeader.Discount)</span>
@@ -76,9 +76,7 @@
                     </div>
                 </div>
                 <div class="card-footer row">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-outline-danger form-control">Email đặt hàng</button>
-                    </div>
+                    
                     <div class="col-6 col-md-3 offset-md-6">
                         <a asp-action="Checkout" class="btn btn-success form-control">Thanh toán </a>
                     </div>

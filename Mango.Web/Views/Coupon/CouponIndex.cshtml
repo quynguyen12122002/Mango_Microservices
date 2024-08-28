@@ -4,7 +4,7 @@
 	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
 		<div class="row">
 			<div class="col-12 text-center">
-				<h1 class="text-white">Coupons List</h1>
+				<h1 class="text-white">Danh sách mã giảm giá</h1>
 			</div>
 		</div>
 	</div>
@@ -13,7 +13,7 @@
 			<div class="col-6">
 			</div>
 			<div class="col-6 text-end">
-				<a asp-action="CouponCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Thêm mới PGG</a>
+				<a asp-action="CouponCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Thêm mới</a>
 
 			</div>
 		</div>
@@ -21,10 +21,10 @@
 			<thead>
 				<tr>
 					<th>
-						Mã GG
+						Mã giảm giá
 					</th>
 					<th>
-						Discount Amount
+						Chiết khấu
 					</th>
 					<th>
 						Giá trị tối thiểu
@@ -38,10 +38,10 @@
 				<tr>
 					<td> @item.CouponCode
 					</td>
-					<td> @((item.DiscountAmount).ToString("c"))
+					<td> @((item.DiscountAmount).ToString("N0"))
 					</td>
 						<td>
-							@((item.MinAmount).ToString("c"))
+							@((item.MinAmount).ToString("N0"))
 					</td>
 					<td>
 							<a asp-action="CouponDelete" asp-route-couponId="@item.CouponId" class="btn btn-danger">

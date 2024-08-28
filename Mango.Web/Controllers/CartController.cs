@@ -34,39 +34,34 @@ namespace Mango.Web.Controllers
         [ActionName("Checkout")]
         public async Task<IActionResult> Checkout(CartDto cartDto)
         {
-
+            // Tải giỏ hàng của người dùng hiện tại
             CartDto cart = await LoadCartDtoBasedOnLoggedInUser();
+
+            // Cập nhật thông tin giỏ hàng với thông tin từ đối tượng cartDto
             cart.CartHeader.Phone = cartDto.CartHeader.Phone;
             cart.CartHeader.Email = cartDto.CartHeader.Email;
             cart.CartHeader.Name = cartDto.CartHeader.Name;
 
+            // Tạo đơn hàng mới
             var response = await _orderService.CreateOrder(cart);
             OrderHeaderDto orderHeaderDto = JsonConvert.DeserializeObject<OrderHeaderDto>(Convert.ToString(response.Result));
 
             if (response != null && response.IsSuccess)
             {
-                //get stripe session and redirect to stripe to place order
-                //
+                // Nếu đơn hàng được tạo thành công, có thể thực hiện các bước tiếp theo như lưu trữ thông tin hoặc thông báo thành công
+                // Ví dụ, chuyển hướng người dùng đến trang xác nhận đơn hàng
+
                 var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+                var confirmationUrl = domain + "cart/Confirmation?orderId=" + orderHeaderDto.OrderHeaderId;
 
-                StripeRequestDto stripeRequestDto = new()
-                {
-                    ApprovedUrl = domain + "cart/Confirmation?orderId=" + orderHeaderDto.OrderHeaderId,
-                    CancelUrl = domain + "cart/checkout",
-                    OrderHeader = orderHeaderDto
-                };
-
-                var stripeResponse = await _orderService.CreateStripeSession(stripeRequestDto);
-                StripeRequestDto stripeResponseResult = JsonConvert.DeserializeObject<StripeRequestDto>
-                                            (Convert.ToString(stripeResponse.Result));
-                Response.Headers.Add("Location", stripeResponseResult.StripeSessionUrl);
-                return new StatusCodeResult(303);
-
-
-
+                // Chuyển hướng đến trang xác nhận đơn hàng
+                return Redirect(confirmationUrl);
             }
+
+            // Nếu có lỗi, trả về view để người dùng có thể thấy thông báo lỗi hoặc thực hiện các hành động khác
             return View();
         }
+
 
         public async Task<IActionResult> Confirmation(int orderId)
         {
@@ -90,7 +85,7 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _cartService.RemoveFromCartAsync(cartDetailsId);
             if (response != null & response.IsSuccess)
             {
-                TempData["success"] = "Cart updated successfully";
+                TempData["success"] = "Giỏ hàng cập nhật thành công";
                 return RedirectToAction(nameof(CartIndex));
             }
             return View();
@@ -103,25 +98,12 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _cartService.ApplyCouponAsync(cartDto);
             if (response != null & response.IsSuccess)
             {
-                TempData["success"] = "Cart updated successfully";
+                TempData["success"] = "Giỏ hàng cập nhật thành công";
                 return RedirectToAction(nameof(CartIndex));
             }
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EmailCart(CartDto cartDto)
-        {
-            CartDto cart = await LoadCartDtoBasedOnLoggedInUser();
-            cart.CartHeader.Email = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
-            ResponseDto? response = await _cartService.EmailCart(cart);
-            if (response != null & response.IsSuccess)
-            {
-                TempData["success"] = "Email will be processed and sent shortly.";
-                return RedirectToAction(nameof(CartIndex));
-            }
-            return View();
-        }
 
         [HttpPost]
         public async Task<IActionResult> RemoveCoupon(CartDto cartDto)
@@ -130,7 +112,7 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _cartService.ApplyCouponAsync(cartDto);
             if (response != null & response.IsSuccess)
             {
-                TempData["success"] = "Cart updated successfully";
+                TempData["success"] = "Giỏ hàng cập nhật thành công";
                 return RedirectToAction(nameof(CartIndex));
             }
             return View();

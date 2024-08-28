@@ -72,14 +72,11 @@ namespace Mango.Web.Controllers
 
             if(result!=null && result.IsSuccess)
             {
-                if (string.IsNullOrEmpty(obj.Role))
-                {
                     obj.Role = SD.RoleCustomer;
-                }
                 assingRole = await _authService.AssignRoleAsync(obj);
                 if (assingRole!=null && assingRole.IsSuccess)
                 {
-                    TempData["success"] = "Registration Successful";
+                    TempData["success"] = "Đăng ký thành công";
                     return RedirectToAction(nameof(Login));
                 }
             }

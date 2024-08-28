@@ -2,12 +2,12 @@
 {
     public class SD
     {
-        public const string Status_Pending = "Pending";
-        public const string Status_Approved = "Approved";
-        public const string Status_ReadyForPickup = "ReadyForPickup";
-        public const string Status_Completed = "Completed";
-        public const string Status_Refunded = "Refunded";
-        public const string Status_Cancelled = "Cancelled";
+        public const string Status_Pending = "Đang chờ";
+        public const string Status_Approved = "Xác nhận";
+        public const string Status_ReadyForPickup = "Đang giao";
+        public const string Status_Completed = "Hoàn thành";
+        public const string Status_Refunded = "Trả hàng";
+        public const string Status_Cancelled = "Hủy đơn";
 
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";

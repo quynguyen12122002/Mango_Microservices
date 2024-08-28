@@ -84,7 +84,7 @@ namespace Mango.Web.Controllers
 
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Item has been added to the Shopping Cart";
+                TempData["success"] = "Sản phẩm đã được thêm vào giỏ hàng";
                 return RedirectToAction(nameof(Index));
             }
             else

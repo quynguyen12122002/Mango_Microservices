@@ -47,7 +47,7 @@ namespace Mango.Web.Controllers
 
                 if (response != null && response.IsSuccess)
                 {
-                    TempData["success"] = "Product created successfully";
+                    TempData["success"] = "Thêm sản phẩm mới thành công";
                     return RedirectToAction(nameof(ProductIndex));
                 }
                 else
@@ -81,7 +81,7 @@ namespace Mango.Web.Controllers
 
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Product deleted successfully";
+                TempData["success"] = "Xóa sản phẩm thành công";
                 return RedirectToAction(nameof(ProductIndex));
             }
             else
@@ -116,7 +116,7 @@ namespace Mango.Web.Controllers
 
                 if (response != null && response.IsSuccess)
                 {
-                    TempData["success"] = "Product updated successfully";
+                    TempData["success"] = "Cập nhật sản phẩm thành công";
                     return RedirectToAction(nameof(ProductIndex));
                 }
                 else

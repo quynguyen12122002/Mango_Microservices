@@ -1,20 +1,28 @@
 ﻿@{
 
 	var status = Context.Request.Query["status"];
-	var approved = "";
-	var readyforpickup = "";
-	var cancelled = "";
+	var dangcho = "";
+	var xacnhan = "";
+	var danggiao = "";
+	var huydon = "";
+	var hoanthanh = "";
 	var all = "";
 
 	switch(status){
-		case "approved":
-			approved = "active text-white bg-secondary";
+		case "Đang chờ":
+			dangcho = "active text-white bg-secondary";
 			break;
-		case "readyforpickup":
-			readyforpickup = "active text-white bg-secondary";
+		case "Xác nhận":
+			xacnhan = "active text-white bg-secondary";
 			break;
-		case "cancelled":
-			cancelled = "active text-white bg-secondary";
+		case "Đang giao":
+			danggiao = "active text-white bg-secondary";
+			break;
+		case "Hủy đơn":
+			huydon = "active text-white bg-secondary";
+			break;
+		case "Hoàn thành":
+			hoanthanh = "active text-white bg-secondary";
 			break;
 		default:
 			all = "active text-white bg-secondary";
@@ -31,14 +39,20 @@
 				<h1 class="text-white">Danh sách đơn hàng</h1>
 		</div>
 		<ul class="list-group list-group-horizontal-sm pt-2">
-			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="approved">
-				<li class="list-group-item @approved">Xác nhận</li>
+			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="Đang chờ">
+				<li class="list-group-item @dangcho">Đang chờ</li>
 			</a>
-			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="readyforpickup">
-			<li class="list-group-item @readyforpickup">Đang giao</li>
+			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="Xác nhận">
+				<li class="list-group-item @xacnhan">Xác nhận</li>
 			</a>
-			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="cancelled">
-			<li class="list-group-item @cancelled">Hủy</li>
+			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="Đang giao">
+			<li class="list-group-item @danggiao">Đang giao</li>
+			</a>
+			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="Hoàn thành">
+			<li class="list-group-item @hoanthanh">Hoàn thành</li>
+			</a>
+			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="Hủy đơn">
+			<li class="list-group-item @huydon">Hủy</li>
 			</a>
 			<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="all">
 			<li class="list-group-item @all">Tất cả</li>
